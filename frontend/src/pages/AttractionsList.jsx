@@ -166,7 +166,13 @@ const AttractionsList = () => {
                   onClick={() => handleAttractionClick(attraction)}
                 >
                   <div className="slide-image">
-                    <img src={imageUrl} alt={attraction.name} />
+                    <img 
+                      src={imageUrl} 
+                      alt={attraction.name}
+                      onError={(e) => {
+                        e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+                      }}
+                    />
                   </div>
                   <div className="slide-info">
                     <h3 className="slide-title">{attraction.name}</h3>
@@ -226,7 +232,13 @@ const AttractionsList = () => {
                   onClick={() => handleAttractionClick(attraction)}
                 >
                   <div className="slide-image">
-                    <img src={imageUrl} alt={attraction.name} />
+                    <img 
+                      src={imageUrl} 
+                      alt={attraction.name}
+                      onError={(e) => {
+                        e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+                      }}
+                    />
                   </div>
                   <div className="slide-info">
                     <h3 className="slide-title">{attraction.name}</h3>

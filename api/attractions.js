@@ -57,19 +57,35 @@ export default async function handler(req, res) {
       if (error) throw error;
 
       // Transform data to match expected format
-      const attractions = (data || []).map(attraction => ({
-        ...attraction,
-        _id: attraction.id,
-        cityId: attraction.cities ? {
-          _id: attraction.cities.id,
-          name: attraction.cities.name,
-          country: attraction.cities.country,
-          image: attraction.cities.image
-        } : null,
-        city_id: undefined,
-        cities: undefined,
-        reviews_count: attraction.reviews_count ? Number(attraction.reviews_count) : 0
-      }));
+      const attractions = (data || []).map(attraction => {
+        // Ensure images is always an array
+        let images = attraction.images || [];
+        if (typeof images === 'string') {
+          try {
+            images = JSON.parse(images);
+          } catch (e) {
+            images = [];
+          }
+        }
+        if (!Array.isArray(images)) {
+          images = [];
+        }
+
+        return {
+          ...attraction,
+          _id: attraction.id,
+          images: images,
+          cityId: attraction.cities ? {
+            _id: attraction.cities.id,
+            name: attraction.cities.name,
+            country: attraction.cities.country,
+            image: attraction.cities.image
+          } : null,
+          city_id: undefined,
+          cities: undefined,
+          reviews_count: attraction.reviews_count ? Number(attraction.reviews_count) : 0
+        };
+      });
 
       res.status(200).json({
         attractions,

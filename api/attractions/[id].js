@@ -27,6 +27,7 @@ export default async function handler(req, res) {
     const { id } = req.query;
 
     if (req.method === 'GET') {
+      const supabase = getSupabaseClient();
       const { data, error } = await supabase
         .from('attractions')
         .select(`
@@ -47,6 +48,19 @@ export default async function handler(req, res) {
         return res.status(404).json({ message: 'Attraction not found' });
       }
 
+      // Ensure images is always an array
+      let images = data.images || [];
+      if (typeof images === 'string') {
+        try {
+          images = JSON.parse(images);
+        } catch (e) {
+          images = [];
+        }
+      }
+      if (!Array.isArray(images)) {
+        images = [];
+      }
+
       // Transform data to match expected format
       const attraction = {
         ...data,
@@ -55,7 +69,7 @@ export default async function handler(req, res) {
         name: data.name,
         description: data.description,
         category: data.category,
-        images: data.images,
+        images: images,
         price: Number(data.price),
         rating: Number(data.rating),
         reviews_count: data.reviews_count ? Number(data.reviews_count) : 0,
