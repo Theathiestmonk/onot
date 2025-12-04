@@ -4,7 +4,7 @@ const citiesData = [
   {
     name: 'Ahmedabad',
     country: 'India',
-    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1693629704084-0f4600ba9ffd?w=800&q=80',
     description: 'The largest city in Gujarat, known for its rich history, vibrant culture, and architectural marvels.'
   },
   {
