@@ -50,7 +50,7 @@ const Home = () => {
                 onClick={() => handleCitySelect(city)}
               >
                 <div className="city-circle-image">
-                  <img src={city.image || 'https://via.placeholder.com/200?text=City'} alt={city.name} />
+                  <img src={city.image || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5DaXR5PC90ZXh0Pjwvc3ZnPg=='} alt={city.name} />
                 </div>
                 <p className="city-circle-name">{city.name}</p>
               </div>
@@ -76,7 +76,7 @@ const Home = () => {
                   onClick={() => handleCitySelect(city)}
                 >
                   <div className="city-list-image">
-                    <img src={city.image || 'https://via.placeholder.com/200?text=City'} alt={city.name} />
+                    <img src={city.image || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5DaXR5PC90ZXh0Pjwvc3ZnPg=='} alt={city.name} />
                   </div>
                   <span className="city-list-name">{city.name}</span>
                 </div>

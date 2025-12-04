@@ -155,9 +155,10 @@ const AttractionsList = () => {
           {mostVisited.length > 0 ? (
             mostVisited.map((attraction) => {
               const id = attraction._id || attraction.id;
+              const placeholderImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
               const imageUrl = attraction.images && attraction.images.length > 0 
                 ? attraction.images[0] 
-                : 'https://via.placeholder.com/300x200?text=No+Image';
+                : placeholderImage;
               
               return (
                 <div
@@ -170,7 +171,7 @@ const AttractionsList = () => {
                       src={imageUrl} 
                       alt={attraction.name}
                       onError={(e) => {
-                        e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+                        e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
                       }}
                     />
                   </div>
@@ -221,9 +222,10 @@ const AttractionsList = () => {
           {filteredAttractions.length > 0 ? (
             filteredAttractions.map((attraction) => {
               const id = attraction._id || attraction.id;
+              const placeholderImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
               const imageUrl = attraction.images && attraction.images.length > 0 
                 ? attraction.images[0] 
-                : 'https://via.placeholder.com/300x200?text=No+Image';
+                : placeholderImage;
               
               return (
                 <div
@@ -236,7 +238,7 @@ const AttractionsList = () => {
                       src={imageUrl} 
                       alt={attraction.name}
                       onError={(e) => {
-                        e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+                        e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
                       }}
                     />
                   </div>
