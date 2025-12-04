@@ -31,7 +31,21 @@ export default async function handler(req, res) {
       const { data, error } = await supabase
         .from('attractions')
         .select(`
-          *,
+          id,
+          name,
+          description,
+          category,
+          images,
+          price,
+          rating,
+          reviews_count,
+          duration,
+          address,
+          opening_hours,
+          featured,
+          city_id,
+          created_at,
+          updated_at,
           cities (
             id,
             name,
@@ -48,9 +62,13 @@ export default async function handler(req, res) {
         return res.status(404).json({ message: 'Attraction not found' });
       }
 
+      // Debug: Log raw data from Supabase
+      console.log('Raw data from Supabase:', JSON.stringify(data, null, 2));
+      console.log('Raw reviews_count from DB:', data.reviews_count, 'Type:', typeof data.reviews_count);
+      console.log('Raw images from DB:', data.images, 'Type:', typeof data.images, 'Is Array:', Array.isArray(data.images));
+
       // Ensure images is always an array
       let images = data.images || [];
-      console.log('Raw images from DB:', images, 'Type:', typeof images, 'Is Array:', Array.isArray(images));
       
       if (typeof images === 'string') {
         try {
@@ -76,9 +94,11 @@ export default async function handler(req, res) {
         description: data.description,
         category: data.category,
         images: images,
-        price: Number(data.price),
-        rating: Number(data.rating),
-        reviews_count: data.reviews_count ? Number(data.reviews_count) : 0,
+        price: Number(data.price || 0),
+        rating: Number(data.rating || 0),
+        reviews_count: data.reviews_count !== null && data.reviews_count !== undefined 
+          ? Number(data.reviews_count) 
+          : 0,
         duration: data.duration,
         address: data.address,
         openingHours: data.opening_hours,
@@ -92,6 +112,8 @@ export default async function handler(req, res) {
           image: data.cities.image
         } : null
       };
+      
+      console.log('Transformed attraction reviews_count:', attraction.reviews_count, 'Type:', typeof attraction.reviews_count);
 
       res.status(200).json(attraction);
     } else {

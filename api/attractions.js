@@ -31,7 +31,21 @@ export default async function handler(req, res) {
       let query = supabase
         .from('attractions')
         .select(`
-          *,
+          id,
+          name,
+          description,
+          category,
+          images,
+          price,
+          rating,
+          reviews_count,
+          duration,
+          address,
+          opening_hours,
+          featured,
+          city_id,
+          created_at,
+          updated_at,
           cities (
             id,
             name,
@@ -56,6 +70,13 @@ export default async function handler(req, res) {
 
       if (error) throw error;
 
+      // Debug: Log first attraction to see what we're getting
+      if (data && data.length > 0) {
+        console.log('Sample attraction from DB:', JSON.stringify(data[0], null, 2));
+        console.log('Sample reviews_count:', data[0].reviews_count, 'Type:', typeof data[0].reviews_count);
+        console.log('Sample images:', data[0].images, 'Type:', typeof data[0].images);
+      }
+
       // Transform data to match expected format
       const attractions = (data || []).map(attraction => {
         // Ensure images is always an array
@@ -75,6 +96,11 @@ export default async function handler(req, res) {
           ...attraction,
           _id: attraction.id,
           images: images,
+          price: Number(attraction.price || 0),
+          rating: Number(attraction.rating || 0),
+          reviews_count: attraction.reviews_count !== null && attraction.reviews_count !== undefined 
+            ? Number(attraction.reviews_count) 
+            : 0,
           cityId: attraction.cities ? {
             _id: attraction.cities.id,
             name: attraction.cities.name,
@@ -82,8 +108,7 @@ export default async function handler(req, res) {
             image: attraction.cities.image
           } : null,
           city_id: undefined,
-          cities: undefined,
-          reviews_count: attraction.reviews_count ? Number(attraction.reviews_count) : 0
+          cities: undefined
         };
       });
 
