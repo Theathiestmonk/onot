@@ -28,8 +28,26 @@ const AttractionDetail = () => {
     );
   }
 
-  const mainImage = attraction.images && attraction.images.length > 0 
-    ? attraction.images[0] 
+  // Ensure images is an array and get the first image
+  let images = attraction.images || [];
+  if (!Array.isArray(images)) {
+    // Try to parse if it's a string
+    if (typeof images === 'string') {
+      try {
+        images = JSON.parse(images);
+      } catch (e) {
+        images = [];
+      }
+    } else {
+      images = [];
+    }
+  }
+  
+  // Debug: Log images to console
+  console.log('Attraction images:', images, 'Type:', typeof images, 'Is Array:', Array.isArray(images));
+  
+  const mainImage = images.length > 0 
+    ? images[0] 
     : 'https://via.placeholder.com/800x400?text=No+Image';
 
   // Format opening hours
@@ -67,7 +85,14 @@ const AttractionDetail = () => {
     <div className="attraction-detail-page">
       {/* Image Section with Back Button */}
       <div className="image-section">
-        <img src={mainImage} alt={attraction.name} className="main-image" />
+        <img 
+          src={mainImage} 
+          alt={attraction.name} 
+          className="main-image"
+          onError={(e) => {
+            e.target.src = 'https://via.placeholder.com/800x400?text=No+Image';
+          }}
+        />
         <button className="back-button-overlay" onClick={() => navigate(-1)}>
           <svg className="back-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

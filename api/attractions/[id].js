@@ -50,16 +50,22 @@ export default async function handler(req, res) {
 
       // Ensure images is always an array
       let images = data.images || [];
+      console.log('Raw images from DB:', images, 'Type:', typeof images, 'Is Array:', Array.isArray(images));
+      
       if (typeof images === 'string') {
         try {
           images = JSON.parse(images);
         } catch (e) {
+          console.log('Failed to parse images string:', e);
           images = [];
         }
       }
       if (!Array.isArray(images)) {
+        console.log('Images is not an array, converting to array');
         images = [];
       }
+      
+      console.log('Processed images:', images);
 
       // Transform data to match expected format
       const attraction = {
