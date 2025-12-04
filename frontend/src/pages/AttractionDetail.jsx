@@ -28,10 +28,23 @@ const AttractionDetail = () => {
     );
   }
 
-  // Get first image URL - backend already parsed it as an array
+  // Parse images - same logic as home page and other pages
+  let images = attraction.images || [];
+  if (typeof images === 'string') {
+    try {
+      images = JSON.parse(images);
+    } catch (e) {
+      images = [];
+    }
+  }
+  if (!Array.isArray(images)) {
+    images = [];
+  }
+
+  // Get first image URL
   const placeholderImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
-  const mainImage = attraction.images && attraction.images.length > 0 
-    ? attraction.images[0] 
+  const mainImage = images.length > 0 
+    ? images[0] 
     : placeholderImage;
 
   // Format opening hours

@@ -62,27 +62,14 @@ export default async function handler(req, res) {
         return res.status(404).json({ message: 'Attraction not found' });
       }
 
-      // Parse images - check if it's an array, if not parse it
-      let images = data.images || [];
-      if (typeof images === 'string') {
-        try {
-          images = JSON.parse(images);
-        } catch (e) {
-          images = [];
-        }
-      }
-      if (!Array.isArray(images)) {
-        images = [];
-      }
-
-      // Return attraction with parsed data
+      // Return raw data - frontend will parse images
       const attraction = {
         _id: data.id,
         id: data.id,
         name: data.name,
         description: data.description,
         category: data.category,
-        images: images,
+        images: data.images, // Return as-is, frontend will parse
         price: Number(data.price || 0),
         rating: Number(data.rating || 0),
         reviews_count: Number(data.reviews_count || 0),
