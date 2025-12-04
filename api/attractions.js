@@ -70,16 +70,9 @@ export default async function handler(req, res) {
 
       if (error) throw error;
 
-      // Debug: Log first attraction to see what we're getting
-      if (data && data.length > 0) {
-        console.log('Sample attraction from DB:', JSON.stringify(data[0], null, 2));
-        console.log('Sample reviews_count:', data[0].reviews_count, 'Type:', typeof data[0].reviews_count);
-        console.log('Sample images:', data[0].images, 'Type:', typeof data[0].images);
-      }
-
       // Transform data to match expected format
       const attractions = (data || []).map(attraction => {
-        // Ensure images is always an array
+        // Parse images - ensure it's an array
         let images = attraction.images || [];
         if (typeof images === 'string') {
           try {
@@ -93,22 +86,26 @@ export default async function handler(req, res) {
         }
 
         return {
-          ...attraction,
           _id: attraction.id,
+          id: attraction.id,
+          name: attraction.name,
+          description: attraction.description,
+          category: attraction.category,
           images: images,
           price: Number(attraction.price || 0),
           rating: Number(attraction.rating || 0),
-          reviews_count: attraction.reviews_count !== null && attraction.reviews_count !== undefined 
-            ? Number(attraction.reviews_count) 
-            : 0,
+          reviews_count: Number(attraction.reviews_count || 0),
+          duration: attraction.duration,
+          address: attraction.address,
+          openingHours: attraction.opening_hours,
+          opening_hours: attraction.opening_hours,
+          featured: attraction.featured,
           cityId: attraction.cities ? {
             _id: attraction.cities.id,
             name: attraction.cities.name,
             country: attraction.cities.country,
             image: attraction.cities.image
-          } : null,
-          city_id: undefined,
-          cities: undefined
+          } : null
         };
       });
 

@@ -62,32 +62,21 @@ export default async function handler(req, res) {
         return res.status(404).json({ message: 'Attraction not found' });
       }
 
-      // Debug: Log raw data from Supabase
-      console.log('Raw data from Supabase:', JSON.stringify(data, null, 2));
-      console.log('Raw reviews_count from DB:', data.reviews_count, 'Type:', typeof data.reviews_count);
-      console.log('Raw images from DB:', data.images, 'Type:', typeof data.images, 'Is Array:', Array.isArray(data.images));
-
-      // Ensure images is always an array
+      // Parse images - check if it's an array, if not parse it
       let images = data.images || [];
-      
       if (typeof images === 'string') {
         try {
           images = JSON.parse(images);
         } catch (e) {
-          console.log('Failed to parse images string:', e);
           images = [];
         }
       }
       if (!Array.isArray(images)) {
-        console.log('Images is not an array, converting to array');
         images = [];
       }
-      
-      console.log('Processed images:', images);
 
-      // Transform data to match expected format
+      // Return attraction with parsed data
       const attraction = {
-        ...data,
         _id: data.id,
         id: data.id,
         name: data.name,
@@ -96,9 +85,7 @@ export default async function handler(req, res) {
         images: images,
         price: Number(data.price || 0),
         rating: Number(data.rating || 0),
-        reviews_count: data.reviews_count !== null && data.reviews_count !== undefined 
-          ? Number(data.reviews_count) 
-          : 0,
+        reviews_count: Number(data.reviews_count || 0),
         duration: data.duration,
         address: data.address,
         openingHours: data.opening_hours,
@@ -112,8 +99,6 @@ export default async function handler(req, res) {
           image: data.cities.image
         } : null
       };
-      
-      console.log('Transformed attraction reviews_count:', attraction.reviews_count, 'Type:', typeof attraction.reviews_count);
 
       res.status(200).json(attraction);
     } else {
