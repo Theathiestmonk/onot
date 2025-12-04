@@ -1,0 +1,17 @@
+{
+  "name": "onot",
+  "version": "1.0.0",
+  "description": "Travel attractions booking webapp",
+  "type": "module",
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build",
+    "dev": "cd frontend && npm run dev"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.86.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+
